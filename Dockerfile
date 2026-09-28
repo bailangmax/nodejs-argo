@@ -1,15 +1,12 @@
-FROM node:alpine3.22
+FROM node:26-alpine
 
-WORKDIR /tmp
+# 1. 显式指定正确的代码存放目录（例如 /app）
+WORKDIR /app
 
-COPY index.js index.html package.json ./
+# 2. 复制项目文件
+COPY package*.json ./
+RUN npm install
+COPY . .
 
-EXPOSE 3000/tcp
-
-RUN apk update && apk upgrade &&\
-    apk add --no-cache openssl curl gcompat iproute2 coreutils &&\
-    apk add --no-cache bash &&\
-    chmod +x index.js &&\
-    npm install
-
+# 3. 设置启动命令
 CMD ["node", "index.js"]
