@@ -3,8 +3,7 @@ WORKDIR /app
 
 COPY package*.json ./
 RUN npm install
-COPY --chown=node:node . .
-RUN chown node:node /app
+COPY . .
 
-USER node
-CMD ["node", "index.js"]
+WORKDIR /tmp
+CMD ["node", "/app/index.js"]
